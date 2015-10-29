@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:jersey="http://www.mulesoft.org/schema/mule/jersey"
+	xmlns:https="http://www.mulesoft.org/schema/mule/https"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core" 
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/jersey http://www.mulesoft.org/schema/mule/jersey/current/mule-jersey.xsd 
+http://www.mulesoft.org/schema/mule/https http://www.mulesoft.org/schema/mule/https/current/mule-https.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+
+	<context:property-placeholder location="classpath:${env}.properties" />
+	
+	<spring:beans>
+		<spring:import resource="classpath:SpringContext.xml" />
+		<spring:bean id="userResource" class="com.mycompany.eai.resource.UserResource">
+			<spring:property name="userBean" ref="userBean" />
+		</spring:bean>
+	</spring:beans>
+
+	<http:connector name="NoSessionConnector" doc:name="HTTP-HTTPS">
+		<service-overrides sessionHandler="org.mule.session.NullSessionHandler" />
+	</http:connector>
+
+	<flow name="mainFlow" >
+		<http:inbound-endpoint exchange-pattern="request-response" 
+			host="${http.host}" 
+			port="${http.port}"
+			path="${http.path}" 
+			doc:name="HTTP" connector-ref="NoSessionConnector"/>
+        <message-filter doc:name="Filter favicon">
+			<not-filter>                        
+				<wildcard-filter pattern="/favicon.ico" caseSensitive="true"/>                  
+			</not-filter>
+		</message-filter>
+		<jersey:resources doc:name="JerseyComponent">
+		  <component>
+		  	<spring-object bean="userResource" />
+		  </component>
+            <jersey:exception-mapper class="com.mycompany.eai.exception.mapper.BadRequestExceptionMapper"/>
+		</jersey:resources>
+		<object-to-string-transformer mimeType="application/json" doc:name="transform-object-to-Json"/>       
+		 
+		<catch-exception-strategy doc:name="Catch Exception Strategy">
+            <logger message="An exception has been caught: #[groovy:message.getExceptionPayload().getException().getMessage()]" level="ERROR" doc:name="Exception Thrown"/>
+            <set-payload value="Error detected while processing #[groovy:message.getExceptionPayload().getException().getMessage()]" doc:name="Prepare response for client"/>
+            <set-property propertyName="http.status" value="500" doc:name="http.status500"/>
+            <http:response-builder status="500" doc:name="Status-code=500" doc:description="Exception - Sending a 500 Http Status code as Response" contentType="application/json"/>
+        </catch-exception-strategy>		
+	
+	</flow>
+
+	
+</mule>

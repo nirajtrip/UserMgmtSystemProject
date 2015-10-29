@@ -1,0 +1,7 @@
+{
+  "name" : "John Doe",
+  "email" : "johndoe@test.com",
+  "address" : "123 Main St. New York, NY, 10010",
+  "password" : "asd54321",
+  "dateLastLogin" : "02-10-2015T11:21:21Z"  
+}

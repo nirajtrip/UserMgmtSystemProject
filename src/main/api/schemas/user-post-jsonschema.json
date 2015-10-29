@@ -1,0 +1,33 @@
+{
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"type":"object",
+	"id": "http://jsonschema.net",
+	"required":false,
+	"properties":{
+
+		"name": {
+			"type":"string",
+			"id": "http://jsonschema.net/name",
+			"required":true,
+			"description": "Specify User's Name."
+		},
+		"email": {
+			"type":"string",
+			"id": "http://jsonschema.net/email",
+			"required":true,
+			"description": "Specify User's Email-Id."
+		},
+		"address": {
+			"type":"string",
+			"id": "http://jsonschema.net/address",
+			"required":false,
+			"description": "Specify User's Address."
+		},
+		"password": {
+			"type":"string",
+			"id": "http://jsonschema.net/email",
+			"required":false,
+			"description": "Specify User's Password."
+		}
+	}
+}

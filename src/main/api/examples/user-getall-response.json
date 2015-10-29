@@ -1,0 +1,32 @@
+[
+{
+  "id" : 1010,
+  "name" : "John Doe",
+  "email" : "johndoe@test.com",
+  "address" : "123 Main St. New York, NY, 10010",
+  "password" : "asd54321",
+  "dateLastLogin" : "22-10-2015T11:21:21Z",
+  "createDate": "02-10-2015T11:21:21Z",
+  "lastUpdatedDate": "02-10-2015T11:21:21Z",    
+}
+{
+  "id" : 1020,
+  "name" : "Jane Miller",
+  "email" : "janemiller@test.com",
+  "address" : "4060 Venice Blvd. Los Angeles, CA, 95040",
+  "password" : "xyz321",
+  "dateLastLogin" : "12-05-2015T11:21:21Z",
+  "createDate": "02-05-2015T11:21:21Z",
+  "lastUpdatedDate": "02-05-2015T11:21:21Z",    
+}
+{
+  "id" : 1030,
+  "name" : "Jack Ma",
+  "email" : "jackma@test.com",
+  "address" : "123 Prince St. Detroit, MI, 24040",
+  "password" : "abc123",
+  "dateLastLogin" : "02-10-2015T11:21:21Z",
+  "createDate": "02-11-2015T11:21:21Z",
+  "lastUpdatedDate": "02-11-2015T11:21:21Z",    
+}
+]

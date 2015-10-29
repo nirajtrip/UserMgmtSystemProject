@@ -1,0 +1,117 @@
+#%RAML 0.8
+# UserMgmtSystem API
+---
+title: UserMgmtSystem API
+baseUri: http://userapi.cloudhub.io/api/{version}
+version: v1
+protocols: [ HTTP,HTTPS ]
+mediaType: application/json
+#securedBy: [basic]
+#securitySchemes:
+#  - basic:
+#      type: Basic Authentication
+
+documentation:
+ - title: Home
+   content: Welcome to the User Management System version 1.0
+/login:
+  displayName: Get login access
+  description: To authenticate the user using email and password
+  post: 
+    description: This call is used to authenticate an User. 
+    body: 
+      application/json: 
+        schema: !include schemas/login-post-jsonschema.json
+        example: !include examples/login-post-request.json
+    responses: 
+      200: 
+        description: The User has been authenticated.
+        body: 
+          application/json: 
+            example: !include examples/login-200-response.json         
+  get:
+    description: To authenticate the user using email and password.
+    queryParameters:
+      email:
+        displayName: Email Id
+        description: "Enter email to validate the account"
+        type: string
+        required: false
+        minLength: 4
+        example: johndoe@mail.com
+      password:
+        displayName:  Password 
+        description: "Enter password  to validate the account"
+        type: string
+        required: false
+        minLength: 4
+        example: abcd
+    responses: 
+      200: 
+        description: User authentication passed.
+        body: 
+          application/json:   
+              example: !include examples/login-200-response.json     
+      400: 
+        description: User authentication failed.
+        body: 
+          application/json:   
+              example: !include examples/login-failed-response.json     
+/user:
+  displayName: Create a new User.
+  post: 
+    description: This call is used to create a new User. 
+    body: 
+      application/json: 
+        schema: !include schemas/user-post-jsonschema.json
+        example: !include examples/user-post-request.json
+    responses: 
+      201: 
+        description: The User resource has been created.
+        body: 
+          application/json: 
+            example: !include examples/user-getById-response.json          
+  get: 
+    description: This call is used to return all User. 
+    responses: 
+      200: 
+        description: Returns list of User objects.  
+        body: 
+          application/json: 
+            example: !include examples/user-getall-response.json
+  /{id}:
+    get: 
+      description: This call is used to return User for specified Id. 
+      responses: 
+        200: 
+          description: Returns particular User for given Id.  
+          body: 
+            application/json: 
+              example: !include examples/user-getById-response.json  
+
+    put: 
+      description: To update the User record. 
+      body: 
+        application/json: 
+          schema: !include schemas/user-post-jsonschema.json
+          example: !include examples/user-post-request.json
+      responses: 
+        200: 
+          description: Return response for succesful update.  
+          body: 
+            application/json: 
+              example: !include examples/user-getById-response.json
+    delete: 
+      description: This call is used to delete a User for given Id. 
+      responses: 
+        200: 
+          description: Record deleted for the specified Id.
+          body: 
+            application/json: 
+              example: !include examples/user-delete-response.json
+        204:
+          description: |
+            The resource has been succesfully removed.
+        404:
+          description: |
+            Unable to find an User with given Id

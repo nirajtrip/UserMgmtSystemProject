@@ -1,0 +1,10 @@
+{
+  "id" : 12345,
+  "name" : "John Doe",
+  "email" : "johndoe@test.com",
+  "address" : "123 Main St. New York, NY, 10010",
+  "password" : "abcXyz123",
+  "dateLastLogin" : "02-10-2015T11:21:21Z",
+  "createDate": "02-11-2015T11:21:21Z",
+  "lastUpdatedDate": "02-11-2015T11:21:21Z",    
+}
