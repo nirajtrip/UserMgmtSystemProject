@@ -123,7 +123,8 @@ public class UserResource {
 		LOGGER.info("UserResource: loginUser()");
     	User result = userBean.findByEmailAndPassword(email, password);
     	if (result!=null) {
-			return Response.status(Status.OK)
+    		result.setDateLastLogin(new Date());
+		return Response.status(Status.OK)
 		        	.entity("Login passed.")
 		        	.type(MediaType.APPLICATION_JSON)
 		        	.build();    		
