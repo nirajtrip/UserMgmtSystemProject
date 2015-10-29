@@ -27,6 +27,7 @@ POST: <BASE_URL>/person
 4. Update a specific User using Id
 
 HTTP Request Headers:
+
 | Name        | Value | Remarks |
 |:----------- |:------------| :-------|
 | Content-Type | application/json |   Required for the POST API call only.|  
@@ -38,6 +39,7 @@ PUT: <BASE_URL>/user/{id}
 5. Delete User
 ```console
 DELETE: <BASE_URL>/user/{id}  
+```
 
 6. Login using email and password
 ```console
